@@ -1,14 +1,12 @@
-import express from 'express'
-import dotenv from 'dotenv'
+import { Webhooks, createNodeMiddleware, EmitterWebhookEvent } from "@octokit/webhooks"
+import { WebhookEvent, IssuesOpenedEvent } from "@octokit/webhooks-types";
 
-dotenv.config()
+const webhooks = new Webhooks({
+    secret: ""
+});
 
-const app = express()
+webhooks.onAny((event: EmitterWebhookEvent) => {
+  console.log(event)
+});
 
-app.all('*', (req, res, next) => {
-    console.log(req)
-})
-
-app.listen(process.env.PORT, () => {
-    console.log(`App listening on port ${process.env.PORT}`)
-})
+require("http").createServer(createNodeMiddleware(webhooks)).listen(3000);
