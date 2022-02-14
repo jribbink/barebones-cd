@@ -1,5 +1,5 @@
 import dotenv from 'dotenv'
-import { StringUtils } from '../utils/string-utils'
+import { StringUtils } from './utils/string-utils'
 
 export class AppConfig {
     port: number
@@ -8,9 +8,18 @@ export class AppConfig {
     
     private environment: NodeJS.ProcessEnv
 
-    constructor(environment?: NodeJS.ProcessEnv) {
+    private static instance: AppConfig
+
+    static getInstance() {
+      if(!AppConfig.instance) {
+        AppConfig.instance = new AppConfig()
+      }
+      return AppConfig.instance
+    }
+
+    constructor() {
         dotenv.config()
-        this.environment = environment ?? process.env
+        this.environment = process.env
         this.port = this.getIntegerEnvVar("PORT")
         this.webhook_secret = this.getStringEnvVar("WEBHOOK_SECRET")
         this.deploy_url = this.getStringEnvVar("DEPLOY_URL")
