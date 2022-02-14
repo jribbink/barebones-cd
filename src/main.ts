@@ -25,7 +25,7 @@ addWebhook(webhooks, "push", (options) => {
     const ssh_url = options.payload.repository.ssh_url;
     const repo_path = path.resolve(resolveHome(config.deploy_url), `${options.payload.repository.name}-${options.payload.repository.id}`);
     console.log(`git clone ${ssh_url} ${repo_path}`)
-    child_process.exec(`git clone ${ssh_url} ${repo_path}`)
+    child_process.execSync(`git clone ${ssh_url} ${repo_path}`)
 })
 
 http.createServer(createNodeMiddleware(webhooks, {path: '/'})).listen(config.port, () => {
