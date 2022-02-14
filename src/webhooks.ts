@@ -13,6 +13,7 @@ const config = AppConfig.getInstance()
 export class Webhooks extends OctokitWebhooks {
     constructor(options: Options & {secret: string}) {
         super(options)
+        this.addWebhooks()
     }
 
     addWebhook<E extends WebhookEventName>(event: E | E[], callback: HandlerFunction<E, unknown>) {
