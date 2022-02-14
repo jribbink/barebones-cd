@@ -9,4 +9,6 @@ app.all('*', (req, res, next) => {
     console.log(req)
 })
 
-app.listen(process.env.port)
+app.listen(process.env.PORT, () => {
+    console.log(`App listening on port ${process.env.PORT}`)
+})
